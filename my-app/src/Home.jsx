@@ -8,7 +8,7 @@ const Home = () => {
   useEffect(() => {
     const elements = document.querySelectorAll('.animate-fade');
     elements.forEach((el, i) => {
-      el.style.animationDelay = `${i * 0.1}s`; // ✅ Fixed template string
+      el.style.animationDelay = `${i * 0.1}s`;
       el.classList.add('fade-in');
     });
   }, []);
@@ -21,13 +21,8 @@ const Home = () => {
     <div className="home-container">
       {/* Intro Section */}
       <div className="intro">
-        <h1 className="animate-fade">Welcome to Our Website</h1>
+        <h1 className="animate-fade welcome-heading">Welcome to ResuTrack</h1>
         <p className="animate-fade">Your one-stop solution for job finding and more!</p>
-        {/* Optional CTA buttons */}
-        {/* <div className="cta-buttons">
-          <Link to="/login" className="cta-btn animate-fade">Login</Link>
-          <Link to="/signup" className="cta-btn animate-fade">Sign Up</Link>
-        </div> */}
       </div>
 
       {/* Features Section */}
@@ -58,7 +53,7 @@ const Home = () => {
             <Link
               to={feature.link}
               key={index}
-              className={`feature-item ${activeBox === index ? "active" : ""}`} // ✅ fixed className formatting
+              className={`feature-item ${activeBox === index ? "active" : ""}`}
               onClick={() => handleBoxClick(index)}
             >
               <div className="feature-icon">
@@ -73,29 +68,74 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="testimonials animate-fade slide-in">
-        <div className="section-icon">💬</div>
-        <h2 className="section-heading">What Our Users Say</h2>
-        <div className="testimonial-item">
-          <p>"This platform helped me land my dream job!"</p>
-          <span>– Alex J.</span>
-        </div>
-        <div className="testimonial-item">
-          <p>"I love how easy it is to use and how quickly I got results."</p>
-          <span>– Maria R.</span>
+      {/* Image + Description Section */}
+      <section className="image-description-section animate-fade slide-in">
+        <div className="image-description-container">
+          <div className="image-container">
+            <img
+              src="https://th.bing.com/th/id/OIP.mTaPE6ys7sKpY7v7YixKxgHaE7?rs=1&pid=ImgDetMain"
+              alt="Our mission"
+            />
+          </div>
+          <div className="description-container">
+            <h2>Discover Our Mission</h2>
+            <p>
+              Our Resume Analyzer helps you land your dream job by matching your resume with top company requirements.
+              It provides real-time ATS scoring, identifying strengths and areas for improvement.
+              Get smart suggestions to enhance skills, keywords, and formatting.
+              Discover job openings that fit your profile perfectly.
+              Receive personalized feedback to increase your chances of getting shortlisted.
+              Your resume, reimagined — smarter, stronger, and job-ready.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Newsletter Section */}
-      <section className="newsletter animate-fade slide-in">
-        <div className="section-icon">📬</div>
-        <h2 className="section-heading">Stay Updated</h2>
-        <p>Subscribe to our newsletter to get the latest job tips and updates.</p>
-        <form className="newsletter-form">
-          <input type="email" placeholder="Enter your email" />
-          <button type="submit">Subscribe</button>
-        </form>
+      {/* How Resume Analyzer Works Section */}
+      <section className="image-description-section reverse-layout">
+        <div className="image-description-container">
+          <div className="description-container">
+            <h2>How Our Resume Analyzer Works</h2>
+            <p>
+              Upload your resume and let our intelligent engine scan it in real-time. It evaluates
+              your skills and compares them with top job descriptions. Our AI highlights missing
+              keywords, suggests optimizations, and gives you an ATS-friendly score. Get detailed
+              feedback and instantly see jobs that match your improved resume!
+            </p>
+          </div>
+          <div className="image-container">
+            <img
+              src="https://miro.medium.com/max/6200/1*u5qY6Pg7nbW_8oCZyYVOOA.jpeg"
+              alt="Resume Analyzer Process"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials and Newsletter Section */}
+      <section className="testimonials-newsletter animate-fade slide-in">
+        <div className="testimonials">
+          <div className="section-icon">💬</div>
+          <h2 className="section-heading">What Our Users Say</h2>
+          <div className="testimonial-item">
+            <p>"This platform helped me land my dream job!"</p>
+            <span>– Sanjay Roy.</span>
+          </div>
+          <div className="testimonial-item">
+            <p>"I love how easy it is to use and how quickly I got results."</p>
+            <span>– Supriya Rajaneni.</span>
+          </div>
+        </div>
+
+        <div className="newsletter">
+          <div className="section-icon">📬</div>
+          <h2 className="section-heading">Stay Updated</h2>
+          <p>Subscribe to our newsletter to get the latest job tips and updates.</p>
+          <form className="newsletter-form">
+            <input type="email" placeholder="Enter your email" aria-label="Email address" />
+            <button type="submit" aria-label="Subscribe to newsletter">Subscribe</button>
+          </form>
+        </div>
       </section>
     </div>
   );

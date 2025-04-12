@@ -125,6 +125,12 @@ Please structure your response **exactly** using these 4 sections:
           />
         </div>
 
+        <ul>
+          <li>Analyze resume Information</li>
+          <li>Personalized roadmap to get your dream job</li>
+          <li>Eligible companies and Roles</li>
+          <li>Areas of Improvements</li>
+        </ul>
         <button type="submit" className="analyze-button" disabled={loading}>
           {loading ? "Analyzing..." : "Assess Now"}
         </button>
@@ -148,7 +154,7 @@ Please structure your response **exactly** using these 4 sections:
               />
             </section>
 
-            <section>
+            {/* <section>
               <h3>🏁 Personalized Roadmap to Get Into {company || "Your Dream Company"}</h3>
               <div
                 className="response-box"
@@ -170,7 +176,7 @@ Please structure your response **exactly** using these 4 sections:
                 className="response-box"
                 dangerouslySetInnerHTML={{ __html: marked.parse(improvements) }}
               />
-            </section>
+            </section> */}
 
             <details>
               <summary style={{ color: "#ccc", cursor: "pointer" }}>Show Raw</summary>

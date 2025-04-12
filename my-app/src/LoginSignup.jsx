@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginSignup.css";
+import { useAuth } from "./AuthContext";
 
 const LoginSignup = () => {
+  const { login } = useAuth(); // ✅ Auth hook
+  const navigate = useNavigate(); // ✅ Navigation
+
   const [isSignup, setIsSignup] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -14,11 +19,28 @@ const LoginSignup = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  // ✅ Clear form on initial load (helps after logout)
+  useEffect(() => {
+    setForm({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+    setMessage("");
+    setErrors({});
+  }, []);
+
   const toggleMode = () => {
     setIsSignup(!isSignup);
-    setForm({ name: "", email: "", password: "", confirmPassword: "" });
+    setForm({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
     setErrors({});
-    setMessage(""); // Reset message when toggling between login and signup
+    setMessage("");
   };
 
   const validate = () => {
@@ -42,36 +64,42 @@ const LoginSignup = () => {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-    } else {
-      setLoading(true);
-      const url = isSignup ? "http://localhost:2051/register" : "http://localhost:2051/login";
-      const method = isSignup ? "POST" : "POST";
+      return;
+    }
 
-      try {
-        const res = await fetch(url, {
-          method,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
-        });
+    setLoading(true);
+    const url = isSignup
+      ? "http://localhost:2051/register"
+      : "http://localhost:2051/login";
 
-        const data = await res.text();
-        if (res.ok) {
-          setMessage(`${isSignup ? "Registered" : "Logged in"} successfully!`);
-          // Redirect or take any other action on success
-        } else {
-          setMessage(data);
-        }
-      } catch (err) {
-        setMessage("Error: " + err.message);
-      } finally {
-        setLoading(false);
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.text();
+
+      if (res.ok) {
+        login(); // ✅ Update auth state
+        setMessage(`${isSignup ? "Registered" : "Logged in"} successfully!`);
+        setTimeout(() => {
+          navigate("/resutrack"); // ✅ Redirect to ResuTrack
+        }, 500); // Small delay for user feedback
+      } else {
+        setMessage(data);
       }
+    } catch (err) {
+      setMessage("Error: " + err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="auth-container">
-      <form className="auth-form" onSubmit={handleSubmit}>
+      <form className="auth-form" onSubmit={handleSubmit} autoComplete="off">
         <h2 className="form-heading">{isSignup ? "Sign Up" : "Login"}</h2>
 
         {isSignup && (
@@ -83,6 +111,7 @@ const LoginSignup = () => {
               value={form.name}
               onChange={handleChange}
               className="input-field"
+              autoComplete="new-name"
             />
             {errors.name && <span className="error">{errors.name}</span>}
           </div>
@@ -96,6 +125,7 @@ const LoginSignup = () => {
             value={form.email}
             onChange={handleChange}
             className="input-field"
+            autoComplete="new-email"
           />
           {errors.email && <span className="error">{errors.email}</span>}
         </div>
@@ -108,6 +138,7 @@ const LoginSignup = () => {
             value={form.password}
             onChange={handleChange}
             className="input-field"
+            autoComplete="new-password"
           />
           {errors.password && <span className="error">{errors.password}</span>}
         </div>
@@ -121,6 +152,7 @@ const LoginSignup = () => {
               value={form.confirmPassword}
               onChange={handleChange}
               className="input-field"
+              autoComplete="new-password"
             />
             {errors.confirmPassword && (
               <span className="error">{errors.confirmPassword}</span>
@@ -128,11 +160,16 @@ const LoginSignup = () => {
           </div>
         )}
 
-        <button type="submit" className="submit-btn">
-          {isSignup ? "Register" : "Login"}
+        <button type="submit" className="submit-btn" disabled={loading}>
+          {loading
+            ? isSignup
+              ? "Registering..."
+              : "Logging in..."
+            : isSignup
+            ? "Register"
+            : "Login"}
         </button>
 
-        {loading && <p>Loading...</p>}
         {message && <p className="message">{message}</p>}
 
         <p className="switch-link" onClick={toggleMode}>

@@ -13,10 +13,10 @@
   }
   
   .scrolling-text {
-    padding: 0.7rem 1rem;
+    padding: 0.5rem;
     border-radius: 10px;
     color: #fff;
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 500;
     overflow: hidden;
     font-family: 'Segoe UI', sans-serif;

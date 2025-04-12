@@ -1,0 +1,80 @@
+/* Centered full-page container with radial blue background */
+.apply-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* background: radial-gradient(circle at center, #a2c5ff, #0f52ba); */
+    padding: 2rem;
+  }
+  
+  /* Inner white box */
+  .apply-box {
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(76, 110, 245, 0.4);
+    transform: scale(1.05);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    background: radial-gradient(circle at center, #a2c5ff, #0f52ba);
+  }
+  
+  /* Title styling */
+  .title {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #0f52ba;
+  }
+  
+  /* File input */
+  .file-input {
+    margin-bottom: 1rem;
+  }
+  
+  /* Upload progress bar container */
+  .upload-bar-container {
+    margin-top: 1rem;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    height: 20px;
+  }
+  
+  /* Animated upload bar */
+  .upload-bar {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  
+  /* Percentage text inside upload bar */
+  .upload-percentage {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    font-size: 0.8rem;
+    color: white;
+    line-height: 20px;
+  }
+  
+  /* Submit button */
+  .submit-btn {
+    margin-top: 1.5rem;
+    padding: 0.7rem;
+    width: 100%;
+    background-color: #0f52ba;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Button hover effect */
+  .submit-btn:hover {
+    background-color: #09418f;
+  }
+  

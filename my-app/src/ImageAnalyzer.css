@@ -17,15 +17,17 @@ body {
     transition: all 300ms linear;
   }
   .container {
-    background: linear-gradient(to right, #5A585A, #8C8585);
-    
-    padding: 30px;
-    border-radius: 15px;
+    background: linear-gradient(135deg, #2a2c35, #454646);
+    height: auto; /* Let height grow with content */
+    width: 120%; /* Slightly smaller than full width for better aesthetics */
+    max-width: 1000px; /* Increased from 800px */
+    padding: 40px; /* More padding for spacious feel */
+    border-radius: 30px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 600px;
+    margin: 40px auto; /* Top and bottom margin, centered horizontally */
     transition: all 0.3s ease;
   }
+  
   
   h3 {
     color: #333;
@@ -49,7 +51,8 @@ body {
   }
   
   button {
-    margin-top: 15px;
+    margin-top: 10px;
+    margin-bottom: 15px;
     padding: 12px 20px;
     background: #4c6ef5;
     color: #fff;
