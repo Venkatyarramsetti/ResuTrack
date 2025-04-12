@@ -190,6 +190,111 @@ const companies = [
       },
     ],
   },
+  {
+    name: "SpaceX",
+    logo: "https://img.icons8.com/?size=100&id=54087&format=png&color=000000",
+    location: "California HQ",
+    jobs: [
+      {
+        title: "Aerospace Engineer",
+        requirements: [
+          { skill: "Orbital Mechanics", description: "Trajectory planning for spacecraft" },
+          { skill: "MATLAB", description: "Simulation and modeling" },
+        ],
+      },
+      {
+        title: "Software Engineer",
+        requirements: [
+          { skill: "C++", description: "Real-time systems development" },
+          { skill: "Telemetry", description: "Data acquisition and analysis" },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Flipkart",
+    logo: "https://img.icons8.com/?size=100&id=40566&format=png&color=000000",
+    location: "Bangalore HQ",
+    jobs: [
+      {
+        title: "Full Stack Developer",
+        requirements: [
+          { skill: "React.js", description: "Dynamic frontend development" },
+          { skill: "Node.js", description: "Backend APIs and microservices" },
+        ],
+      },
+      {
+        title: "Business Analyst",
+        requirements: [
+          { skill: "Excel", description: "Advanced data modeling" },
+          { skill: "Power BI", description: "Dashboard and reporting tools" },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Infosys",
+    logo: "https://img.icons8.com/?size=100&id=Kj2bMiAyMrry&format=png&color=000000",
+    location: "Pune Campus",
+    jobs: [
+      {
+        title: "Systems Engineer",
+        requirements: [
+          { skill: "Java", description: "Backend enterprise applications" },
+          { skill: "Spring Boot", description: "Microservice architecture" },
+        ],
+      },
+      {
+        title: "QA Tester",
+        requirements: [
+          { skill: "Selenium", description: "Automated UI testing" },
+          { skill: "TestNG", description: "Framework and test suites" },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Twitter",
+    logo: "https://img.icons8.com/?size=100&id=13963&format=png&color=000000",
+    location: "San Francisco Office",
+    jobs: [
+      {
+        title: "Site Reliability Engineer",
+        requirements: [
+          { skill: "Monitoring Tools", description: "Prometheus, Grafana, etc." },
+          { skill: "Incident Response", description: "Rapid outage resolution" },
+        ],
+      },
+      {
+        title: "Security Engineer",
+        requirements: [
+          { skill: "Penetration Testing", description: "Identify and fix vulnerabilities" },
+          { skill: "Cryptography", description: "Secure communication design" },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Airbnb",
+    logo: "https://img.icons8.com/?size=100&id=108792&format=png&color=000000",
+    location: "Bangalore Tech Hub",
+    jobs: [
+      {
+        title: "Frontend Developer",
+        requirements: [
+          { skill: "TypeScript", description: "Typed JavaScript for large-scale apps" },
+          { skill: "Design Systems", description: "Reusable UI components" },
+        ],
+      },
+      {
+        title: "Data Scientist",
+        requirements: [
+          { skill: "Pandas", description: "Data manipulation and preprocessing" },
+          { skill: "A/B Testing", description: "Data-driven decision making" },
+        ],
+      },
+    ],
+  },
 ];
 
 const Jobs = () => {
@@ -201,45 +306,56 @@ const Jobs = () => {
   };
 
   return (
-    <div className="jobs-wrapper">
-      {companies.map((company, idx) => (
-        <div key={idx} className="company-card">
-          <div className="company-header">
-            <img src={company.logo} alt={company.name} className="company-logo" />
-            <div>
-              <h2>{company.name}</h2>
-              <p className="location">{company.location}</p>
-            </div>
-          </div>
-          {company.jobs.map((job, i) => {
-            const key = `${company.name}-${job.title}`;
-            return (
-              <div key={i} className="job-role">
-                <h3>{job.title}</h3>
-                <button onClick={() => toggle(company.name, job.title)}>
-                  {expanded[key] ? "Hide Requirements" : "Requirements"}
-                </button>
-                {expanded[key] && (
-                  <>
-                    <ul className="requirements">
-                      {job.requirements.map((req, index) => (
-                        <li key={index}>
-                          <span className="tooltip">
-                            {req.skill}
-                            <span className="tooltiptext">{req.description}</span>
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                    <button className="apply-btn">Apply Now</button>
-                  </>
-                )}
-              </div>
-            );
-          })}
+    <>
+      <div className="jobs-heading">
+        <h1>Job Vacancies</h1>
+        <div className="scrolling-text">
+          <marquee behavior="scroll" direction="left" scrollamount="6">
+            📣 A job is vacant at your nearest city 🏙️ | Venue: Tech Park Auditorium 🏢 | Timing: 10 AM - 4 PM ⏰ | Post: Software Developer 💻 | Qualification: B.Tech / M.Tech 🎓
+          </marquee>
         </div>
-      ))}
-    </div>
+      </div>
+
+      <div className="jobs-wrapper">
+        {companies.map((company, idx) => (
+          <div key={idx} className="company-card">
+            <div className="company-header">
+              <img src={company.logo} alt={company.name} className="company-logo" />
+              <div>
+                <h2>{company.name}</h2>
+                <p className="location">{company.location}</p>
+              </div>
+            </div>
+            {company.jobs.map((job, i) => {
+              const key = `${company.name}-${job.title}`;
+              return (
+                <div key={i} className="job-role">
+                  <h3>{job.title}</h3>
+                  <button onClick={() => toggle(company.name, job.title)}>
+                    {expanded[key] ? "Hide Requirements" : "Requirements"}
+                  </button>
+                  {expanded[key] && (
+                    <>
+                      <ul className="requirements">
+                        {job.requirements.map((req, index) => (
+                          <li key={index}>
+                            <span className="tooltip">
+                              {req.skill}
+                              <span className="tooltiptext">{req.description}</span>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      <button className="apply-btn">Apply Now</button>
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
