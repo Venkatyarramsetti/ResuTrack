@@ -40,6 +40,12 @@ const Apply = () => {
             <span className="upload-percentage">{uploadProgress}%</span>
           </div>
         )}
+        <ul>
+          <li>ATS score report using your resume.</li>
+          <li>Matching against job requirements.</li>
+          <li>Job selection:Whether you fit for this role?</li>
+          
+        </ul>
         <button
           className="submit-btn"
           disabled={!isUploadComplete}

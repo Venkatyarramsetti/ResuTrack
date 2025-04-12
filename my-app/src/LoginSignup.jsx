@@ -4,8 +4,8 @@ import "./LoginSignup.css";
 import { useAuth } from "./AuthContext";
 
 const LoginSignup = () => {
-  const { login } = useAuth(); // ✅ Auth hook
-  const navigate = useNavigate(); // ✅ Navigation
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const [isSignup, setIsSignup] = useState(false);
   const [form, setForm] = useState({
@@ -15,11 +15,13 @@ const LoginSignup = () => {
     confirmPassword: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // ✅ Clear form on initial load (helps after logout)
   useEffect(() => {
     setForm({
       name: "",
@@ -82,11 +84,11 @@ const LoginSignup = () => {
       const data = await res.text();
 
       if (res.ok) {
-        login(); // ✅ Update auth state
+        login();
         setMessage(`${isSignup ? "Registered" : "Logged in"} successfully!`);
         setTimeout(() => {
-          navigate("/resutrack"); // ✅ Redirect to ResuTrack
-        }, 500); // Small delay for user feedback
+          navigate("/resutrack");
+        }, 500);
       } else {
         setMessage(data);
       }
@@ -130,9 +132,9 @@ const LoginSignup = () => {
           {errors.email && <span className="error">{errors.email}</span>}
         </div>
 
-        <div className="input-container">
+        <div className="input-container password-container">
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
             value={form.password}
@@ -140,13 +142,19 @@ const LoginSignup = () => {
             className="input-field"
             autoComplete="new-password"
           />
+          <span
+            className="toggle-password"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? "🔓" : "🔒"}
+          </span>
           {errors.password && <span className="error">{errors.password}</span>}
         </div>
 
         {isSignup && (
-          <div className="input-container">
+          <div className="input-container password-container">
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
               placeholder="Confirm Password"
               value={form.confirmPassword}
@@ -154,6 +162,12 @@ const LoginSignup = () => {
               className="input-field"
               autoComplete="new-password"
             />
+            <span
+              className="toggle-password"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+            >
+              {showConfirmPassword ? "🔓" : "🔒"}
+            </span>
             {errors.confirmPassword && (
               <span className="error">{errors.confirmPassword}</span>
             )}
