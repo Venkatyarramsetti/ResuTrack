@@ -1,5 +1,6 @@
 import React from "react";
 import "./FAQ.css";
+import AboutUs from "./Aboutus"; // Adjust path if needed
 
 const faqs = [
   {
@@ -62,16 +63,13 @@ const faqs = [
     question: "How can I contact the support team?",
     answer: "Soon we'll add a contact page. For now, you can raise issues via GitHub.",
   },
+
 ];
 
 const FAQ = () => {
   return (
     <div className="faq-container">
       <div className="faq-content">
-        {/* You can add an image here again if needed */}
-        {/* <div className="faq-left">
-          <img src="/images/faq-person.png" alt="FAQ Person" className="faq-image" />
-        </div> */}
         <div className="faq-right">
           <h2 className="faq-title">Frequently Asked Questions</h2>
           <div className="faq-list">
@@ -84,6 +82,7 @@ const FAQ = () => {
           </div>
         </div>
       </div>
+      <AboutUs /> {/* This will render the About Us section */}
     </div>
   );
 };

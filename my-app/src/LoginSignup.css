@@ -1,172 +1,201 @@
 /* Main Container */
 .auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    animation: fadeIn 1s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  animation: fadeIn 1s ease-in-out;
+  /* background: radial-gradient(circle, #1f2029, #15161c); */
+}
+
+/* Form Container */
+.auth-form {
+  background: radial-gradient(circle at top left, #1f2029, #4c6ef5);
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 400px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+  animation: slideIn 0.6s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-form:hover {
+  box-shadow: 0 20px 40px rgba(76, 110, 245, 0.4);
+  transform: scale(1.02);
+}
+
+/* Form Title */
+.auth-form h2 {
+  color: white;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  animation: fadeInTitle 0.8s ease;
+}
+
+/* Input Fields */
+.input-container {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1.5px solid #ccc;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background: transparent;
+  color: #fff;
+}
+
+.input-field:focus {
+  border-color: #4c6ef5;
+  box-shadow: 0 0 10px #4c6ef5;
+  outline: none;
+}
+
+/* Floating Label Effect */
+.input-container label {
+  position: absolute;
+  top: 12px;
+  left: 15px;
+  color: #aaa;
+  font-size: 14px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus + label,
+.input-field:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 10px;
+  font-size: 12px;
+  background: #1f2029;
+  padding: 0 5px;
+  color: #4c6ef5;
+}
+
+/* Error Message */
+.error {
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  color: red;
+  font-size: 12px;
+}
+
+/* Submit Button */
+.submit-btn {
+  padding: 12px;
+  background: linear-gradient(135deg, #4c6ef5, #00ffe0);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00ffe0;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* Switch Link */
+.switch-link {
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.switch-link:hover {
+  color: #00ffe0;
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(40px);
+    opacity: 0;
   }
-  
-  /* Form Container */
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInTitle {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Responsiveness */
+@media screen and (max-width: 768px) {
   .auth-form {
-    background: radial-gradient(circle, #1f2029, #4c6ef5);
- /* Gradient background to match ImageAnalyzer */
-    padding: 40px 50px;
-    border-radius: 20px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    transition: transform 0.3s ease-in-out;
-    animation: slideIn 0.5s ease-in-out;
+    padding: 30px 40px;
   }
-  
-  /* Form Title */
+
   .auth-form h2 {
-    color: white;
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
-  
-  /* Input Fields */
-  .input-container {
-    margin-bottom: 20px;
-    position: relative;
-  }
-  
+
   .input-field {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1.5px solid #ccc;
-    font-size: 16px;
-    transition: all 0.3s ease;
+    font-size: 14px;
+    padding: 10px;
   }
-  
-  .input-field:focus {
-    border-color: #4c6ef5;
-    outline: none;
+
+  .submit-btn {
+    font-size: 14px;
+    padding: 10px;
   }
-  
-  .error {
-    position: absolute;
-    bottom: -18px;
-    left: 0;
-    color: red;
+
+  .switch-link {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .auth-form {
+    padding: 20px 25px;
+  }
+
+  .auth-form h2 {
+    font-size: 1.6rem;
+  }
+
+  .input-field {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .submit-btn {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .switch-link {
     font-size: 12px;
   }
-  
-  /* Submit Button */
-  .submit-btn {
-    padding: 12px;
-    background: #4c6ef5;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    margin-top: 20px;
-  }
-  
-  .submit-btn:hover {
-    background: #3b5bdb;
-    transform: scale(1.05);
-  }
-  
-  .submit-btn:active {
-    transform: scale(0.98);
-  }
-  
-  /* Switch Link */
-  .switch-link {
-    color: white;
-    text-align: center;
-    font-size: 14px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: color 0.3s ease;
-  }
-  
-  .switch-link:hover {
-    background: radial-gradient(circle, #3b5bdb, rgba(0, 0, 0, 0));
-
-
-
-
-
-
-
-  }
-  
-  /* Animations */
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes slideIn {
-    0% {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  /* Responsiveness */
-  @media screen and (max-width: 768px) {
-    .auth-form {
-      padding: 30px 40px;
-    }
-  
-    .auth-form h2 {
-      font-size: 1.8rem;
-    }
-  
-    .input-field {
-      font-size: 14px;
-      padding: 10px;
-    }
-  
-    .submit-btn {
-      font-size: 14px;
-      padding: 10px;
-    }
-  
-    .switch-link {
-      font-size: 13px;
-    }
-  }
-  
-  @media screen and (max-width: 480px) {
-    .auth-form {
-      padding: 20px 25px;
-    }
-  
-    .auth-form h2 {
-      font-size: 1.6rem;
-    }
-  
-    .input-field {
-      font-size: 13px;
-      padding: 8px;
-    }
-  
-    .submit-btn {
-      font-size: 13px;
-      padding: 8px;
-    }
-  
-    .switch-link {
-      font-size: 12px;
-    }
-  }
-  
+}

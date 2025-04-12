@@ -237,3 +237,26 @@ body.nav-active .nav__list-item {
   transform: translateX(0%);
   transition: opacity .3s ease, transform .3s ease;
 }
+.cd-header {
+  transition: top 0.3s, opacity 0.3s ease;
+}
+
+.cd-header.hidden .nav-login-signup {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cd-header.active .nav-login-signup {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-login-signup {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  padding: 10px;
+  color: white;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+}

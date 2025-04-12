@@ -22,7 +22,7 @@ if (!fs.existsSync(userDataDir)) {
 
 const upload = multer({ dest: "uploads/" });
 
-const genAI = new GoogleGenerativeAI("AIzaSyCcXn6TcJRefRANuF_p_B028ijjnDZlOVU");
+const genAI = new GoogleGenerativeAI("AIzaSyCZ5PaDHQxuyB8zWod8c6KO-XqS1-AfpGM");
 
 // Image analysis route
 app.post("/image-analyze", upload.single("image"), async (req, res) => {
@@ -32,7 +32,7 @@ app.post("/image-analyze", upload.single("image"), async (req, res) => {
     const imageBuffer = fs.readFileSync(imagePath);
     const imageBase64 = imageBuffer.toString("base64");
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
 
     const result = await model.generateContent([
       {
