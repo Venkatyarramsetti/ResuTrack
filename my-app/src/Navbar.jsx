@@ -29,8 +29,8 @@ const Navbar = () => {
       <header className="cd-header">
         <div className="header-wrapper">
           <div className="logo-wrap">
-            <Link to="/" className="hover-target">
-              <span>Resu</span>Track
+            <Link to="/login" className="hover-target">
+              <span>Login/Signup</span>
             </Link>
           </div>
           <div className="nav-but-wrap">
