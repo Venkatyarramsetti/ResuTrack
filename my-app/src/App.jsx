@@ -30,8 +30,7 @@ import Home from './Home';
 import LoginSignup from './LoginSignup';
 import ImageAnalyzer from './ImageAnalyzer';
 import About from './about';
-
-// import About from './About'; // Make sure the file is named About.js
+import Jobs from './Jobs'; // ✅ Import your actual Jobs page (JobSearch)
 
 const App = () => {
   return (
@@ -40,13 +39,12 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginSignup />} />
-        <Route path="/resutrack" element={<ImageAnalyzer />} /> {/* Check if "resutrack" is correct */}
-        <Route path="/jobs" element={<ImageAnalyzer />} />
+        <Route path="/resutrack" element={<ImageAnalyzer />} />
+        <Route path="/jobs" element={<Jobs />} /> {/* ✅ Now it shows the correct Jobs page */}
         <Route path="/about" element={<About />} />
       </Routes>
     </Router>
-      );
-      
+  );
 };
 
 export default App;

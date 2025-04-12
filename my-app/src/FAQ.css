@@ -37,7 +37,7 @@
   }
   
   .faq-item {
-    background: #4e4a4a;
+    background: radial-gradient(circle at top left, #2e3041, #4c6ef5);
     border-radius: 10px;
     padding: 1rem;
     cursor: pointer;

@@ -1,0 +1,155 @@
+.jobs-wrapper {
+  width: 80%;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+@media (min-width: 768px) {
+  .jobs-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .jobs-wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.company-card {
+  background: linear-gradient(to bottom, #1e3c72, #2a5298);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #fff;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.company-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.company-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.company-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #fff;
+  padding: 5px;
+}
+
+.company-header h2 {
+  font-size: 1.25rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+.job-role {
+  margin-top: 0.5rem;
+}
+
+.job-role h3 {
+  font-size: 1.1rem;
+  color: #f0f0f0;
+  margin-bottom: 0.5rem;
+}
+
+.job-role button {
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.3rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.job-role button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #0072ff, #00c6ff);
+}
+
+.requirements {
+  margin-top: 0.5rem;
+  padding-left: 1.2rem;
+  list-style: none;
+  color: #f5f6f7;
+}
+
+.requirements li {
+  position: relative;
+  padding-left: 1.2em;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  color: #eaeaea;
+}
+
+.requirements li::before {
+  content: "•";
+  color: #f5f6f7;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: bold;
+}
+
+.tooltip {
+  color: #8cc6ff;
+  text-decoration: none;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 220px;
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  padding: 0.5rem;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tooltip {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
