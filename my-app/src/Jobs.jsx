@@ -15,6 +15,7 @@ const companies = [
           { skill: "HTML/CSS", description: "Semantic markup and modern layouts" },
           { skill: "Communication", description: "Clear communication in teams" },
           { skill: "Bachelor’s Degree", description: "In CS or related field" },
+          
         ],
       },
       {
