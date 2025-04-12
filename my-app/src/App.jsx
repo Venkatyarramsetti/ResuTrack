@@ -8,7 +8,7 @@ import About from './about';
 import Jobs from './Jobs'; //
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthProvider } from "./AuthContext";
-import Apply from './Apply';
+import Apply from './apply';
 const App = () => {
   return (
     <AuthProvider>

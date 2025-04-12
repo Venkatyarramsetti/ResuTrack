@@ -7,8 +7,6 @@ body {
   font-size: 15px;
   line-height: 1.7;
   color: #c4c3ca;
-  
-  /* background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat-back.svg'); */
   background-position: center;
   background-repeat: repeat;
   background-size: 4%;
@@ -27,13 +25,13 @@ a:hover {
   transform: scale(1.02);
 }
 
-/* Header styles */
 .cd-header {
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
   z-index: 100;
+  transition: top 0.3s, opacity 0.3s ease;
 }
 
 .header-wrapper {
@@ -74,7 +72,6 @@ a:hover {
   margin-top: 26px;
 }
 
-/* Hamburger Icon */
 .menu-icon {
   height: 30px;
   width: 30px;
@@ -108,33 +105,9 @@ a:hover {
   width: 30px;
 }
 
-/* Nav Styles */
 .nav {
   position: fixed;
   z-index: 98;
-}
-
-.nav:before,
-.nav:after {
-  content: "";
-  position: fixed;
-  top: 20px;
-  left: 50px;
-  width: 0;
-  height: 0;
-  /* background-color: rgba(20, 21, 26, 0.6); */
-  border-bottom-right-radius: 200%;
-  z-index: -1;
-  /* transition: border-radius 0.8s, width 0.6s, height 0.6s; */
-}
-
-.nav:after {
-  /* background-color: rgba(9, 9, 12, 1); */
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  background-size: 300%;
-  /* box-shadow: 6px 7px 28px 0 rgba(16, 16, 16, 0.3); */
 }
 
 .nav__content {
@@ -204,7 +177,6 @@ a:hover {
   top: 0;
 }
 
-/* Nav active state */
 body.nav-active .nav__content {
   visibility: visible;
 }
@@ -240,18 +212,37 @@ body.nav-active .nav__list-item {
   transform: translateX(0%);
   transition: opacity .3s ease, transform .3s ease;
 }
-.cd-header {
-  transition: top 0.3s, opacity 0.3s ease;
+
+/* Top nav styling */
+.top-nav {
+  padding: 15px 20px;
+  position: relative;
+  z-index: 200; /* ✅ Required for clicks to work */
 }
 
-.cd-header.hidden .nav-login-signup {
-  opacity: 0;
-  pointer-events: none;
+.top-nav .nav__list {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
-.cd-header.active .nav-login-signup {
-  opacity: 1;
-  pointer-events: auto;
+.top-nav .nav__list-item a {
+  color: #ffffff !important;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.top-nav .nav__list-item a:hover {
+  color: #00ffff;
+}
+
+.nav__list-item {
+  margin: 0 10px;
 }
 
 .nav-login-signup {
@@ -261,5 +252,4 @@ body.nav-active .nav__list-item {
   padding: 10px;
   color: white;
   font-weight: 600;
-  transition: opacity 0.3s ease;
 }

@@ -49,7 +49,7 @@ const Apply = () => {
         <button
           className="submit-btn"
           disabled={!isUploadComplete}
-          onClick={() => alert("Resume submitted!")}
+          onClick={() => alert("You applied successfully")}
         >
           Submit
         </button>

@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // ✅ Import useNavigate
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { useAuth } from './AuthContext';
+import NavLinks from './NavLinks';
 
 const Navbar = () => {
   const menuRef = useRef(null);
   const { isLoggedIn, logout } = useAuth();
-  const navigate = useNavigate(); // ✅ Initialize navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const body = document.body;
@@ -28,12 +29,17 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    logout();             // ✅ Call logout function from context
-    navigate("/");        // ✅ Redirect to Home page
+    logout();
+    navigate("/");
   };
 
   return (
     <div>
+      {/* Top nav with unique hover effect */}
+      <div className="top-nav">
+        <NavLinks hoverClass="top-hover-target" />
+      </div>
+
       <header className="cd-header">
         <div className="header-wrapper">
           <div className="logo-wrap">
@@ -62,44 +68,10 @@ const Navbar = () => {
         </div>
       </header>
 
+      {/* Hidden side nav with original hover effect */}
       <div className="nav">
         <div className="nav__content">
-          <ul className="nav__list">
-            <li className="nav__list-item">
-              <Link to="/" className="hover-target">
-                Home
-              </Link>
-            </li>
-
-            {!isLoggedIn && (
-              <li className="nav__list-item">
-                <Link to="/login" className="hover-target">
-                  Login/SignUp
-                </Link>
-              </li>
-            )}
-
-            {isLoggedIn && (
-              <>
-                <li className="nav__list-item">
-                  <Link to="/resutrack" className="hover-target">
-                    ResuTrack
-                  </Link>
-                </li>
-                <li className="nav__list-item">
-                  <Link to="/jobfinder" className="hover-target">
-                    Job Finder
-                  </Link>
-                </li>
-              </>
-            )}
-
-            <li className="nav__list-item">
-              <Link to="/about" className="hover-target">
-                FAQ/About Us
-              </Link>
-            </li>
-          </ul>
+          <NavLinks hoverClass="hover-target" />
         </div>
       </div>
     </div>
