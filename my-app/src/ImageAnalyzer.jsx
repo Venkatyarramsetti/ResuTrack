@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./index.css";
-import "./ImageAnalyzer.css"
+import "./ImageAnalyzer.css";
+import {marked} from "marked";
+
 const ImageAnalyzer = () => {
   const [image, setImage] = useState(null);
-  const [prompt, setPrompt] = useState("");
   const [company, setCompany] = useState("");
   const [response, setResponse] = useState("");
   const [preview, setPreview] = useState(null);
@@ -51,7 +52,7 @@ Please structure your response **exactly** using these 4 sections:
       });
 
       const data = await res.json();
-      setResponse(data.analysis || "No response from Gemini.");
+      setResponse(marked.parse(data.analysis));
     } catch (err) {
       console.error("Error:", err);
       setResponse("Error uploading or analyzing image.");
@@ -59,22 +60,26 @@ Please structure your response **exactly** using these 4 sections:
       setLoading(false);
     }
   };
+
   const splitSections = (text) => {
     const analysisStart = text.indexOf("📊 Resume Analysis");
     const companiesStart = text.indexOf("🏢 Target Companies & Roles");
     const roadmapStart = text.indexOf("🛣️ Personalized Roadmap (3–6 Months Plan)");
     const improvementStart = text.indexOf("🔍 Areas for Improvement");
-  
-    // If all sections are found
-    if (analysisStart !== -1 && companiesStart !== -1 && roadmapStart !== -1 && improvementStart !== -1) {
-      const analysis = text.slice(analysisStart + "📊 Resume Analysis".length, companiesStart).trim();
-      const companies = text.slice(companiesStart + "🏢 Target Companies & Roles".length, roadmapStart).trim();
-      const roadmap = text.slice(roadmapStart + "🛣️ Personalized Roadmap (3–6 Months Plan)".length, improvementStart).trim();
-      const improvements = text.slice(improvementStart + "🔍 Areas for Improvement".length).trim();
+
+    if (
+      analysisStart !== -1 &&
+      companiesStart !== -1 &&
+      roadmapStart !== -1 &&
+      improvementStart !== -1
+    ) {
+      const analysis = text.slice(analysisStart + 21, companiesStart).trim();
+      const companies = text.slice(companiesStart + 28, roadmapStart).trim();
+      const roadmap = text.slice(roadmapStart + 43, improvementStart).trim();
+      const improvements = text.slice(improvementStart + 27).trim();
       return { analysis, roadmap, companies, improvements };
     }
-  
-    // Fallback: if not all sections are found
+
     return {
       analysis: text,
       roadmap: "",
@@ -82,20 +87,19 @@ Please structure your response **exactly** using these 4 sections:
       improvements: "",
     };
   };
-  
+
   const cleanMarkdown = (text) => {
     return text
-      .replace(/[*_~`>#-]/g, '')                 // Remove *, _, ~, `, #, >, -
-      .replace(/\[(.*?)\]\(.*?\)/g, '$1')        // Convert [text](link) to text
-      .replace(/\n{2,}/g, '\n')                  // Collapse multiple newlines
+      .replace(/[*_~`>#-]/g, "")
+      .replace(/\[(.*?)\]\(.*?\)/g, "$1")
+      .replace(/\n{2,}/g, "\n")
       .trim();
   };
 
-  const { analysis, roadmap, companies } = splitSections(response);
+  const { analysis, roadmap, companies, improvements } = splitSections(response);
+
   return (
-
     <div className="container">
-
       <h2 className="title">ResuTrack Analyzer</h2>
 
       <div className="input-group">
@@ -121,11 +125,10 @@ Please structure your response **exactly** using these 4 sections:
           />
         </div>
 
-        <button type="submit" className="analyze-button">
-          Assess Now
+        <button type="submit" className="analyze-button" disabled={loading}>
+          {loading ? "Analyzing..." : "Assess Now"}
         </button>
       </form>
-
 
       {preview && <img src={preview} alt="Preview" className="preview" />}
 
@@ -136,28 +139,54 @@ Please structure your response **exactly** using these 4 sections:
         </div>
       ) : (
         <>
-            <div className="venkat">
-              <section>
-                <h3>📊 Analysis Based on Resume</h3>
-                <div className="response-box">{cleanMarkdown(analysis)}</div>
-              </section>
+          <div className="venkat">
+            <section>
+              <h3>📊 Analysis Based on Resume</h3>
+              <div
+                className="response-box"
+                dangerouslySetInnerHTML={{ __html: marked.parse(analysis) }}
+              />
+            </section>
 
-              <section>
-                <h3>🏁 Personalized Roadmap to Get Into {company || 'Your Dream Company'}</h3>
-                <div className="response-box">{cleanMarkdown(roadmap)}</div>
-              </section>
+            <section>
+              <h3>🏁 Personalized Roadmap to Get Into {company || "Your Dream Company"}</h3>
+              <div
+                className="response-box"
+                dangerouslySetInnerHTML={{ __html: marked.parse(roadmap) }}
+              />
+            </section>
 
-              <section>
-                <h3>🏢 Eligible Companies and Roles</h3>
-                <div className="response-box">{cleanMarkdown(companies)}</div>
-              </section>
-              <details>
-                <summary style={{ color: "#ccc", cursor: "pointer" }}>Show Raw</summary>
-                <pre style={{ whiteSpace: "pre-wrap", color: "#fff", background: "#2c2c2c", padding: "1rem", borderRadius: "8px" }}>
-                  {cleanMarkdown(response)}
-                </pre>
-              </details>
-            </div>
+            <section>
+              <h3>🏢 Eligible Companies and Roles</h3>
+              <div
+                className="response-box"
+                dangerouslySetInnerHTML={{ __html: marked.parse(companies) }}
+              />
+            </section>
+
+            <section>
+              <h3>🔍 Areas for Improvement</h3>
+              <div
+                className="response-box"
+                dangerouslySetInnerHTML={{ __html: marked.parse(improvements) }}
+              />
+            </section>
+
+            <details>
+              <summary style={{ color: "#ccc", cursor: "pointer" }}>Show Raw</summary>
+              <pre
+                style={{
+                  whiteSpace: "pre-wrap",
+                  color: "#fff",
+                  background: "#2c2c2c",
+                  padding: "1rem",
+                  borderRadius: "8px",
+                }}
+              >
+                {cleanMarkdown(response)}
+              </pre>
+            </details>
+          </div>
         </>
       )}
     </div>

@@ -30,7 +30,7 @@ import Home from './Home';
 import LoginSignup from './LoginSignup';
 import ImageAnalyzer from './ImageAnalyzer';
 import About from './about';
-import Jobs from './Jobs'; // ✅ Import your actual Jobs page (JobSearch)
+import Jobs from './Jobs'; //
 
 const App = () => {
   return (
@@ -40,7 +40,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginSignup />} />
         <Route path="/resutrack" element={<ImageAnalyzer />} />
-        <Route path="/jobs" element={<Jobs />} /> {/* ✅ Now it shows the correct Jobs page */}
+        <Route path="/jobs" element={<Jobs />} /> 
         <Route path="/about" element={<About />} />
       </Routes>
     </Router>

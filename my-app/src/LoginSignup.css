@@ -1,3 +1,7 @@
+.a{
+  text-decoration: none;
+  color: inherit;
+}
 /* Main Container */
 .auth-container {
   display: flex;
@@ -24,7 +28,7 @@
 
 .auth-form:hover {
   box-shadow: 0 20px 40px rgba(76, 110, 245, 0.4);
-  transform: scale(1.02);
+  transform: scale(1.08);
 }
 
 /* Form Title */

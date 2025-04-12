@@ -4,10 +4,28 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="ResuTrack.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
     <title>ResuTrack</title>
   </head>
   <body>
+
+    <video id="bg-video" autoplay muted loop>
+      <source src="fff.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+  
     <div id="root"></div>
+    
+    <!-- JavaScript to slow down video -->
+    <script>
+      window.onload = () => {
+        const video = document.getElementById("bg-video");
+        if (video) {
+          video.playbackRate = 0.5; // Slow down video to half speed
+        }
+      };
+    </script>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

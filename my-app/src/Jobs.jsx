@@ -15,7 +15,6 @@ const companies = [
           { skill: "HTML/CSS", description: "Semantic markup and modern layouts" },
           { skill: "Communication", description: "Clear communication in teams" },
           { skill: "Bachelor’s Degree", description: "In CS or related field" },
-          
         ],
       },
       {
@@ -200,6 +199,7 @@ const Jobs = () => {
     const key = `${company}-${job}`;
     setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
   };
+
   return (
     <div className="jobs-wrapper">
       {companies.map((company, idx) => (
@@ -220,16 +220,19 @@ const Jobs = () => {
                   {expanded[key] ? "Hide Requirements" : "Requirements"}
                 </button>
                 {expanded[key] && (
-                  <ul className="requirements">
-                    {job.requirements.map((req, index) => (
-                      <li key={index}>
-                        <span className="tooltip">
-                          {req.skill}
-                          <span className="tooltiptext">{req.description}</span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+                  <>
+                    <ul className="requirements">
+                      {job.requirements.map((req, index) => (
+                        <li key={index}>
+                          <span className="tooltip">
+                            {req.skill}
+                            <span className="tooltiptext">{req.description}</span>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <button className="apply-btn">Apply Now</button>
+                  </>
                 )}
               </div>
             );
