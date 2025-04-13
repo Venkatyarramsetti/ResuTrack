@@ -4,11 +4,12 @@ import Navbar from './Navbar';
 import Home from './Home';
 import LoginSignup from './LoginSignup';
 import ImageAnalyzer from './ImageAnalyzer';
-import About from './about';
+import About from './About';
 import Jobs from './Jobs'; //
 import ProtectedRoute from "./ProtectedRoute";
 import { AuthProvider } from "./AuthContext";
-import Apply from './apply';
+import Apply from './Aply.jsx';
+
 const App = () => {
   return (
     <AuthProvider>
@@ -19,7 +20,7 @@ const App = () => {
           <Route path="/login" element={<LoginSignup />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<About />} /> {/* FAQ uses About component */}
-          <Route path="/apply" element={<Apply />} /> {/* FAQ uses About component */}
+          <Route path="/Apply" element={<Apply />} /> {/* FAQ uses About component */}
 
           {/* Protected Routes */}
           <Route

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Jobs.css";
-import Apply from './apply';
+import Apply from './Aply';
 
 const companies = [ 
     {
