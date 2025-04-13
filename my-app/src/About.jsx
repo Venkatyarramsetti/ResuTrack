@@ -1,6 +1,6 @@
 import React from "react";
 import "./FAQ.css";
-import AboutUs from "./Aboutus"; // Adjust path if needed
+import AboutUs from "./AboutUs"; // Adjust path if needed
 
 const faqs = [
   {
