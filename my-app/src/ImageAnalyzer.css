@@ -17,7 +17,8 @@ body {
     transition: all 300ms linear;
   }
   .container {
-    background: linear-gradient(135deg, #2a2c35, #454646);
+    background: radial-gradient(circle at top left, #444b6c, #4dd6d6);
+
     height: auto; /* Let height grow with content */
     width: 120%; /* Slightly smaller than full width for better aesthetics */
     max-width: 1000px; /* Increased from 800px */
