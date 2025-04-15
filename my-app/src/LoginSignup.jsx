@@ -23,26 +23,23 @@ const LoginSignup = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    resetForm();
+  }, []);
+
+  const resetForm = () => {
     setForm({
       name: "",
       email: "",
       password: "",
       confirmPassword: "",
     });
-    setMessage("");
     setErrors({});
-  }, []);
+    setMessage("");
+  };
 
   const toggleMode = () => {
     setIsSignup(!isSignup);
-    setForm({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-    setErrors({});
-    setMessage("");
+    resetForm();
   };
 
   const validate = () => {
@@ -84,13 +81,26 @@ const LoginSignup = () => {
       const data = await res.text();
 
       if (res.ok) {
-        login();
-        setMessage(`${isSignup ? "Registered" : "Logged in"} successfully!`);
-        setTimeout(() => {
-          navigate("/resutrack");
-        }, 500);
+        if (isSignup) {
+          // ✅ Registration succeeded – switch to login mode
+          setMessage("✅ Registered successfully! Please login.");
+          setIsSignup(false);
+          setForm({
+            name: "",
+            email: form.email, // optionally keep the email pre-filled
+            password: "",
+            confirmPassword: "",
+          });
+        
+        // } else {
+        //   login();
+        //   setMessage("✅ Logged in successfully!");
+        //   setTimeout(() => {
+        //     navigate("/resutrack");
+        //   }, 500);
+        }
       } else {
-        setMessage(data);
+        setMessage(data || "Something went wrong.");
       }
     } catch (err) {
       setMessage("Error: " + err.message);
