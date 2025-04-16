@@ -92,12 +92,12 @@ const LoginSignup = () => {
             confirmPassword: "",
           });
         
-        // } else {
-        //   login();
-        //   setMessage("✅ Logged in successfully!");
-        //   setTimeout(() => {
-        //     navigate("/resutrack");
-        //   }, 500);
+        } else {
+          login();
+          setMessage("✅ Logged in successfully!");
+          setTimeout(() => {
+            navigate("/resutrack");
+          }, 500);
         }
       } else {
         setMessage(data || "Something went wrong.");
