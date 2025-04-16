@@ -67,9 +67,7 @@ const LoginSignup = () => {
     }
 
     setLoading(true);
-    const url = isSignup
-      ? "http://localhost:2051/register"
-      : "http://localhost:2051/login";
+    const url = `${process.env.REACT_APP_API_URL}/${isSignup ? "register" : "login"}`;
 
     try {
       const res = await fetch(url, {

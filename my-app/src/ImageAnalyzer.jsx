@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./index.css";
 import "./ImageAnalyzer.css";
-import {marked} from "marked";
+import { marked } from "marked";
 
 const ImageAnalyzer = () => {
   const [image, setImage] = useState(null);
@@ -46,7 +46,7 @@ Please structure your response **exactly** using these 4 sections:
 ### 🔍 Areas for Improvement`);
 
     try {
-      const res = await fetch("http://localhost:2051/image-analyze", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/image-analyze`, {
         method: "POST",
         body: formData,
       });
@@ -100,100 +100,52 @@ Please structure your response **exactly** using these 4 sections:
 
   return (
     <div className="container">
-      <h2 className="title">ResuTrack Analyzer</h2>
-
-      <div className="input-group">
-        <label htmlFor="resume-upload" className="input-label">Upload your resume:</label>
+      <h2 className="title">ResuTrack - Resume Analyzer</h2>
+      <p className="subtitle">
+        Upload your resume image, and let us help you find the perfect job!
+      </p>
+      <div className="form-container">
         <input
-          id="resume-upload"
           type="file"
-          accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
+          accept="image/*"
           className="file-input"
         />
+        <input
+          type="text"
+          placeholder="Target Company"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          className="company-input"
+        />
+        <button
+          onClick={handleAnalyze}
+          className="analyze-button"
+          disabled={loading}
+        >
+          {loading ? "Analyzing..." : "Analyze"}
+        </button>
       </div>
 
-      <form onSubmit={(e) => { e.preventDefault(); handleAnalyze(); }}>
-        <div className="input-group">
-          <label htmlFor="company-input" className="input-label">Dream Company:</label>
-          <input
-            id="company-input"
-            type="text"
-            onChange={(e) => setCompany(e.target.value)}
-            placeholder="e.g., Google, Microsoft, Apple..."
-            className="company-input"
-          />
-        </div>
-
-        <ul>
-          <li>Analyze resume Information</li>
-          <li>Personalized roadmap to get your dream job</li>
-          <li>Eligible companies and Roles</li>
-          <li>Areas of Improvements</li>
-        </ul>
-        <button type="submit" className="analyze-button" disabled={loading}>
-          {loading ? "Analyzing..." : "Assess Now"}
-        </button>
-      </form>
-
-      {preview && <img src={preview} alt="Preview" className="preview" />}
-
-      {loading ? (
-        <div className="spinner-container">
-          <div className="spinner"></div>
-          <p>Analyzing resume, please wait...</p>
-        </div>
-      ) : (
-        <>
-          <div className="venkat">
-            <section>
-              <h3>📊 Analysis Based on Resume</h3>
-              <div
-                className="response-box"
-                dangerouslySetInnerHTML={{ __html: marked.parse(analysis) }}
-              />
-            </section>
-
-            {/* <section>
-              <h3>🏁 Personalized Roadmap to Get Into {company || "Your Dream Company"}</h3>
-              <div
-                className="response-box"
-                dangerouslySetInnerHTML={{ __html: marked.parse(roadmap) }}
-              />
-            </section>
-
-            <section>
-              <h3>🏢 Eligible Companies and Roles</h3>
-              <div
-                className="response-box"
-                dangerouslySetInnerHTML={{ __html: marked.parse(companies) }}
-              />
-            </section>
-
-            <section>
-              <h3>🔍 Areas for Improvement</h3>
-              <div
-                className="response-box"
-                dangerouslySetInnerHTML={{ __html: marked.parse(improvements) }}
-              />
-            </section> */}
-
-            <details>
-              <summary style={{ color: "#ccc", cursor: "pointer" }}>Show Raw</summary>
-              <pre
-                style={{
-                  whiteSpace: "pre-wrap",
-                  color: "#fff",
-                  background: "#2c2c2c",
-                  padding: "1rem",
-                  borderRadius: "8px",
-                }}
-              >
-                {cleanMarkdown(response)}
-              </pre>
-            </details>
+      {response && (
+        <div className="analysis-result">
+          <div className="section">
+            <h3>📊 Resume Analysis</h3>
+            <p>{cleanMarkdown(analysis)}</p>
           </div>
-        </>
+          <div className="section">
+            <h3>🏢 Target Companies & Roles</h3>
+            <p>{cleanMarkdown(companies)}</p>
+          </div>
+          <div className="section">
+            <h3>🛣️ Personalized Roadmap</h3>
+            <p>{cleanMarkdown(roadmap)}</p>
+          </div>
+          <div className="section">
+            <h3>🔍 Areas for Improvement</h3>
+            <p>{cleanMarkdown(improvements)}</p>
+          </div>
+        </div>
       )}
     </div>
   );
