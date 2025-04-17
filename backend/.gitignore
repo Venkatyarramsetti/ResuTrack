@@ -31,3 +31,4 @@ build/
 # Optional lock files (if you’re using yarn or pnpm)
 yarn.lock
 pnpm-lock.yaml
+.env
