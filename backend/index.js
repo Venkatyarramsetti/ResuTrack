@@ -31,14 +31,15 @@ app.use(express.json());
 const upload = multer({ dest: "uploads/" });
 
 // MongoDB Connection
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log("✅ Connected to MongoDB");
-}).catch((err) => {
-  console.error("❌ MongoDB connection error:", err);
-});
+
+mongoose.connect(MONGO_URI)
+  .then(() => {
+    console.log("✅ Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+  });
+
 
 // Mongoose User Schema
 const userSchema = new mongoose.Schema({
