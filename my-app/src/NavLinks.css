@@ -1,37 +1,60 @@
-/* Nav Links container */
-.nav-links-wrapper {
-    padding: 20px;
-  }
-  
-  /* List styles */
-  .nav__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .nav__list-item {
-    margin: 10px 0;
-  }
-  
-  /* Hover effect (customizable by prop hoverClass) */
-  .hover-target {
-    text-decoration: none;
-    color: #333;
-    position: relative;
-    transition: color 0.3s ease;
-  }
-  
-  .hover-target:hover {
-    color: #007bff;
-  }
-  
-  /* If using another hover class like "top-hover-target", you can define it here */
-  .top-hover-target {
-    color: #444;
-  }
-  
-  .top-hover-target:hover {
-    color: #007bff;
-  }
-  
+.nav__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav__list-item {
+  margin: 10px 0;
+  opacity: 0;
+  transform: translateX(-20%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.nav__list-item a {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  text-decoration: none;
+  padding-left: 40px;
+  display: inline-block;
+  position: relative;
+  transition: all 200ms linear;
+}
+
+.nav__list-item a:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 5px;
+  height: 0;
+  opacity: 0;
+  background-color: #8167a9;
+  transition: all 200ms linear;
+}
+
+.nav__list-item a:hover {
+  color: #fff;
+}
+
+.nav__list-item a:hover:after {
+  top: 0;
+  height: 100%;
+  opacity: 1;
+}
+
+.nav__list-item.active-nav a {
+  color: #fff;
+}
+
+.nav__list-item.active-nav a:after {
+  height: 100%;
+  opacity: 1;
+  top: 0;
+}
+
+/* Show animation when nav is active */
+body.nav-active .nav__list-item {
+  opacity: 1;
+  transform: translateX(0%);
+}

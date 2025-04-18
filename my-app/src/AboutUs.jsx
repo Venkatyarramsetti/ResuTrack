@@ -6,36 +6,28 @@ const teamMembers = [
   {
     name: "Vinnakota C H Teja",
     github: "https://github.com/hackerteja",
-    email: <div className="email-info">
-    <p style={{ marginLeft: '-10px' , color: '#00ffe0' }}>vinnakotateja118@gmail.com</p>
-  </div>,
+    email: "vinnakotateja118@gmail.com",
     description: "Lead Developer, passionate about creating seamless user experiences.",
   },
   {
     name: "Vadisala Lohith",
     github: "https://github.com/Lance4711",
     email: "lohit.v4711@gmail.com",
-    description: "Frontend Developer, loves working with React and UI designer.",
+    description: "Frontend Developer, loves working with React and UI design.",
   },
   {
     name: "Satya Sai Venkat Yarramsetti",
     github: "https://github.com/Venkatyarramsetti",
-    email:<div className="contact-info">
-    <p style={{ marginLeft: '-10px', color: '#00ffe0'  }}>venkatyarramsetti33@gmail.com</p>
-  </div>,
+    email: "venkatyarramsetti33@gmail.com",
     description: "Full-stack Developer building smart job platforms with React, Node.js, and AI-enhanced tools.",
   },
   {
     name: "Thippani Rakesh",
     github: "https://github.com/Rakesh2004",
-    email: <div className="contact-info">
-    <p style={{ marginLeft: '-10px', color: '#00ffe0'  }}>thippani.rakesh2356@gmail.com</p>
-  </div>,
+    email: "thippani.rakesh2356@gmail.com",
     description: "Full Stack Developer, enjoys tackling both frontend and backend challenges.",
   },
 ];
-
-
 
 const AboutUs = () => {
   return (
@@ -47,7 +39,7 @@ const AboutUs = () => {
             <h4>{member.name}</h4>
             <p>{member.description}</p>
             <a href={member.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-            <p>Email: <a href={`mailto:${member.email}`}>{member.email}</a></p>
+            <p>Email: <a href={`mailto:${member.email}`} style={{ color: '#00ffe0' }}>{member.email}</a></p>
           </div>
         ))}
       </div>

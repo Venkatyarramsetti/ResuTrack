@@ -112,11 +112,11 @@ a:hover {
 
 .nav__content {
   position: fixed;
-  visibility: hidden;
   top: 90px;
   left: 50px;
   width: 280px;
   text-align: left;
+  visibility: hidden; /* Initially hidden */
 }
 
 .nav__list {
@@ -178,7 +178,7 @@ a:hover {
 }
 
 body.nav-active .nav__content {
-  visibility: visible;
+  visibility: visible; /* Make the nav visible when active */
 }
 
 body.nav-active .menu-icon__line {

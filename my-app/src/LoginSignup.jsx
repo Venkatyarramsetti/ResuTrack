@@ -67,7 +67,8 @@ const LoginSignup = () => {
     }
 
     setLoading(true);
-    const url = `${process.env.REACT_APP_API_URL}/${isSignup ? "register" : "login"}`;
+    const url = `${import.meta.env.VITE_API_URL}/${isSignup ? "register" : "login"}`;
+
 
     try {
       const res = await fetch(url, {
