@@ -1,10 +1,9 @@
 // index.js
 
 import dotenv from "dotenv";
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import multer from "multer";
 import fs from "fs";
@@ -14,48 +13,38 @@ import jwt from "jsonwebtoken";
 import { fileURLToPath } from "url";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Setup __dirname for ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Environment variables
-const MONGO_URI = process.env.MONGO_URI;
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 const PORT = process.env.PORT || 2051;
+const USERS_FILE = path.join(__dirname, "users.json");
 
 // Express setup
 const app = express();
-app.use(cors()); // Adjust origin if needed
+app.use(cors());
 app.use(express.json());
 
 const upload = multer({ dest: "uploads/" });
 
-// MongoDB Connection
-
-mongoose.connect(MONGO_URI)
-  .then(() => {
-    console.log("✅ Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.error("❌ MongoDB connection error:", err);
-  });
-
-
-// Mongoose User Schema
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: { type: String, unique: true },
-  password: String,
-});
-
-const User = mongoose.model("User", userSchema);
-
-// Google Generative AI setup
+// Google Generative AI
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
-// Routes
+// ------------------ Helper Functions ------------------
+const readUsers = () => {
+  if (!fs.existsSync(USERS_FILE)) return [];
+  const data = fs.readFileSync(USERS_FILE, "utf8");
+  return JSON.parse(data || "[]");
+};
+
+const writeUsers = (users) => {
+  fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
+};
+
+// ------------------ Routes ------------------
+
 app.get("/", (req, res) => {
-  res.send("👋 Hello from the backend!");
+  res.send("👋 Hello from file-based backend!");
 });
 
 // Analyze image
@@ -80,7 +69,7 @@ app.post("/image-analyze", upload.single("image"), async (req, res) => {
       },
     ]);
 
-    fs.unlinkSync(imagePath); // Remove uploaded image
+    fs.unlinkSync(imagePath);
 
     const response = await result.response;
     const text = response.text();
@@ -91,7 +80,7 @@ app.post("/image-analyze", upload.single("image"), async (req, res) => {
   }
 });
 
-// Register route
+// Register
 app.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -99,14 +88,15 @@ app.post("/register", async (req, res) => {
   }
 
   try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    const users = readUsers();
+    const userExists = users.find((u) => u.email === email);
+    if (userExists) {
       return res.status(400).json({ error: "User already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hashedPassword });
-    await newUser.save();
+    users.push({ name, email, password: hashedPassword });
+    writeUsers(users);
 
     res.status(200).json({ message: "User registered successfully" });
   } catch (error) {
@@ -115,7 +105,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Login route
+// Login
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -123,7 +113,8 @@ app.post("/login", async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ email });
+    const users = readUsers();
+    const user = users.find((u) => u.email === email);
     if (!user) {
       return res.status(400).json({ error: "User not found" });
     }
@@ -133,7 +124,7 @@ app.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Incorrect password" });
     }
 
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: "7d" });
+    const token = jwt.sign({ email: user.email }, JWT_SECRET, { expiresIn: "7d" });
 
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
@@ -142,7 +133,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
