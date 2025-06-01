@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './Navbar.css';
-import { useAuth } from './AuthContext';
-import NavLinks from './NavLinks';
+import React, { useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./Navbar.css";
+import { useAuth } from "./AuthContext";
+import NavLinks from "./NavLinks";
 
 const Navbar = () => {
   const menuRef = useRef(null);
@@ -13,24 +13,24 @@ const Navbar = () => {
     const body = document.body;
 
     const toggleClass = () => {
-      body.classList.toggle('nav-active');
+      body.classList.toggle("nav-active");
     };
 
     const menu = menuRef.current;
     if (menu) {
-      menu.addEventListener('click', toggleClass);
+      menu.addEventListener("click", toggleClass);
     }
 
     return () => {
       if (menu) {
-        menu.removeEventListener('click', toggleClass);
+        menu.removeEventListener("click", toggleClass);
       }
     };
   }, []);
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    navigate("/login");
   };
 
   return (

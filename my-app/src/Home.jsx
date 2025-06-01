@@ -4,6 +4,9 @@ import './Home.css';
 
 const Home = () => {
   const [activeBox, setActiveBox] = useState(null);
+  const [email, setEmail] = useState("");
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState(null);
 
   useEffect(() => {
     const elements = document.querySelectorAll('.animate-fade');
@@ -15,6 +18,32 @@ const Home = () => {
 
   const handleBoxClick = (index) => {
     setActiveBox(index === activeBox ? null : index);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:5000/send-query", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, query }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus("Query sent!");
+        setEmail("");
+        setQuery("");
+      } else {
+        setStatus(`Error: ${data.error || "Failed to send query"}`);
+      }
+    } catch (error) {
+      setStatus("Network error: Failed to send query");
+    }
+
+    setTimeout(() => setStatus(null), 3000);
   };
 
   return (
@@ -125,16 +154,57 @@ const Home = () => {
             <p>"I love how easy it is to use and how quickly I got results."</p>
             <span>– Supriya Rajaneni.</span>
           </div>
+          <div className="testimonial-item">
+            <p>"The resume tips were spot on and really helped me stand out."</p>
+            <span>– Naveen Reddy.</span>
+          </div>
         </div>
 
         <div className="newsletter">
           <div className="section-icon">📬</div>
           <h2 className="section-heading">Stay Updated</h2>
           <p>Subscribe to our newsletter to get the latest job tips and updates.</p>
-          <form className="newsletter-form">
-            <input type="email" placeholder="Enter your email" aria-label="Email address" />
-            <button type="submit" aria-label="Subscribe to newsletter">Subscribe</button>
+
+          <form className="newsletter-form" onSubmit={handleSubmit}>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              aria-label="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <br />
+            <input
+              type="text"
+              placeholder="Enter your query"
+              aria-label="Query"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              required
+            />
+            <br />
+            <button type="submit" aria-label="Submit your queries">
+              Submit
+            </button>
           </form>
+
+          {status && (
+            <div
+              className="popup-message"
+              style={{
+                marginTop: "10px",
+                padding: "10px",
+                borderRadius: "5px",
+                color: "white",
+                backgroundColor: status.startsWith("Error") ? "red" : "green",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              {status}
+            </div>
+          )}
         </div>
       </section>
     </div>

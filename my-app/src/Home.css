@@ -1,279 +1,287 @@
 /* Global Styles */
 body {
-    background-color: #121212;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', sans-serif;
+  background-color: #121212;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.home-container {
+  padding: 3rem;
+  animation: fadeInBody 1s ease-in;
+}
+
+/* Intro Section */
+.intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.welcome-heading {
+  font-size: 4.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.cta-buttons {
+  margin-top: 1.5rem;
+}
+
+/* Features Section */
+.features {
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  perspective: 1000px;
+}
+
+.feature-item {
+  cursor: pointer;
+  flex: 1 1 300px;
+  max-width: 300px;
+  padding: 2rem;
+  border-radius: 20px;
+  color: #fff;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+}
+
+.feature-item:nth-child(2) {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.feature-item:nth-child(3) {
+  background: linear-gradient(135deg, #43cea2, #185a9d);
+}
+
+.feature-item.active {
+  transform: rotateY(15deg) scale(1.1);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+.feature-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Feature Icon Styling */
+.feature-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.icon-large {
+  font-size: 5rem;
+}
+
+.feature-item:hover .icon-large {
+  transform: scale(1.2);
+}
+
+.section-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-heading {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Image + Description Section */
+.image-description-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.image-description-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 1rem;
+  gap: 2rem;
+}
+
+.image-container {
+  flex: 1;
+  max-width: 50%;
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform, box-shadow;
+}
+
+.image-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+
+.description-container {
+  flex: 1;
+  padding: 1rem;
+  text-align: left;
+}
+
+.description-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.description-container p {
+  font-size: 1.1rem;
+  color: #ddd;
+  line-height: 1.5;
+}
+
+/* Testimonials and Newsletter Section */
+.testimonials-newsletter {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.testimonials,
+.newsletter {
+  flex: 1 1 48%;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.testimonial-item,
+.newsletter-form {
+  background-color: transparent;
+}
+
+.testimonials .section-icon,
+.newsletter .section-icon {
+  color: #fff;
+}
+
+.testimonials .section-heading,
+.newsletter .section-heading {
+  color: #fff;
+}
+
+.testimonials .testimonial-item p,
+.newsletter p,
+.newsletter input,
+.newsletter button {
+  color: #fff;
+}
+
+/* ===== NEW Newsletter Form Design - Transparent, no box ===== */
+.newsletter-form {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 30px 25px;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.newsletter-form input[type="email"],
+.newsletter-form input[type="text"] {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  border: 1px solid #4c6ef5;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+
+.newsletter-form input:focus {
+  box-shadow: 0 0 12px #4c6ef5;
+  border-color: #00ffe0;
+}
+
+.newsletter-form button[type="submit"] {
+  width: 100%;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #4c6ef5, #00ffe0);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.newsletter-form button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #00ffe0;
+}
+
+.newsletter-form button:active {
+  transform: scale(0.98);
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
   }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .home-container {
-    padding: 3rem;
-    animation: fadeInBody 1s ease-in;
-  }
-  
-  /* Intro Section */
-  .intro {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  
-  .welcome-heading {
-    font-size: 4.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  .cta-buttons {
-    margin-top: 1.5rem;
-  }
-  
-  /* Features Section */
-  .features {
-    margin-top: 4rem;
-    text-align: center;
-  }
-  
-  .features-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    perspective: 1000px;
-  }
-  
-  .feature-item {
-    cursor: pointer;
-    flex: 1 1 300px;
-    max-width: 300px;
-    padding: 2rem;
-    border-radius: 20px;
-    color: #fff;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);
-  }
-  
-  .feature-item:nth-child(2) {
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-  }
-  
-  .feature-item:nth-child(3) {
-    background: linear-gradient(135deg, #43cea2, #185a9d);
-  }
-  
-  .feature-item.active {
-    transform: rotateY(15deg) scale(1.1);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-    z-index: 10;
-  }
-  
-  .feature-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  }
-  
-  /* Feature Icon Styling */
-  .feature-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    transition: transform 0.3s ease;
-  }
-  
-  .icon-large {
-    font-size: 5rem;
-  }
-  
-  .feature-item:hover .icon-large {
-    transform: scale(1.2);
-  }
-  
-  .section-icon {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .section-heading {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-  }
-  
-  /* Image + Description Section */
-  .image-description-section {
-    display: flex;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .testimonials-newsletter {
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 4rem;
   }
 
-  
-  .image-description-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 1rem;
-    gap: 2rem;
-  }
-  .image-container {
-    flex: 1;
-    max-width: 50%;
-    padding: 1rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    will-change: transform, box-shadow;
-  }
-  
-  .image-container:hover {
-    transform: scale(1.05);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  }
-  
-  .image-container img {
+  .testimonials,
+  .newsletter {
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-    display: block;
+    margin-bottom: 2rem;
   }
-  
-  
-  .description-container {
-    flex: 1;
-    padding: 1rem;
-    text-align: left;
-  }
-  
-  .description-container h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #fff;
-  }
-  
-  .description-container p {
-    font-size: 1.1rem;
-    color: #ddd;
-    line-height: 1.5;
-  }
-  
-  /* Testimonials and Newsletter Section (Side by Side) */
-  .testimonials-newsletter {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-  
-  .testimonials,
-  .newsletter {
-    flex: 1 1 48%;  /* This makes them take equal space */
-    padding: 2rem;
-    border-radius: 12px;
-    text-align: center;
-  }
-  
-  .testimonials {
-    background-color: #2d2d2d;
-  }
-  
-  .newsletter {
-    background-color: #333;
-  }
-  
-  /* Optional: Add responsiveness for smaller screens */
-  @media (max-width: 768px) {
-    .testimonials-newsletter {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .testimonials,
-    .newsletter {
-      width: 100%;
-      margin-bottom: 2rem;
-    }
-  }
-  
-  /* Testimonials and Newsletter Section (Side by Side) with Transparency */
-  .testimonials-newsletter {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-  
-  .testimonials,
-  .newsletter {
-    flex: 1 1 48%;  /* This makes them take equal space */
-    padding: 2rem;
-    border-radius: 12px;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.5); /* Apply transparency */
-  }
-  
-  .testimonials {
-    background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
-  }
-  
-  .newsletter {
-    background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
-  }
-  
-  .testimonial-item,
+
   .newsletter-form {
-    background-color: transparent; /* Ensures the inner items don't have an opaque background */
+    padding: 20px;
   }
-  
-  .testimonials .section-icon,
-  .newsletter .section-icon {
-    color: #fff; /* Ensure icons remain white on transparent background */
-  }
-  
-  .testimonials .section-heading,
-  .newsletter .section-heading {
-    color: #fff; /* Ensure headings remain white on transparent background */
-  }
-  
-  .testimonials .testimonial-item p,
-  .newsletter p,
-  .newsletter input,
-  .newsletter button {
-    color: #fff; /* Ensures text inside the sections is visible */
-  }
-  
-  /* Subscribe button styling */
+
+  .newsletter-form input,
   .newsletter-form button {
-    padding: 0.5rem 1rem; /* Smaller padding */
-    border: none;
-    background-color: #ff8c00;
-    color: white;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1rem; /* Adjust font size */
-    width: auto; /* Make button fit content */
+    font-size: 0.95rem;
   }
-  
-  .newsletter-form button:hover {
-    background-color: #e67300;
-  }
-  
-  /* Optional: Add responsiveness for smaller screens */
-  @media (max-width: 768px) {
-    .testimonials-newsletter {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .testimonials,
-    .newsletter {
-      width: 100%;
-      margin-bottom: 2rem;
-    }
-  }
+}

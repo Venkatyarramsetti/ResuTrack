@@ -1,206 +1,131 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import "./LoginSignup.css";
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthContext";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+
+import "./LoginSignup.css";
 
 const LoginSignup = () => {
-  const { login } = useAuth();
+  const { login, register } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [isSignup, setIsSignup] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
+  const isRegister = location.pathname === "/register";
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    resetForm();
-  }, []);
-
-  const resetForm = () => {
-    setForm({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-    setErrors({});
-    setMessage("");
-  };
-
-  const toggleMode = () => {
-    setIsSignup(!isSignup);
-    resetForm();
-  };
-
-  const validate = () => {
-    const newErrors = {};
-    if (isSignup && !form.name.trim()) newErrors.name = "Name is required";
-    if (!form.email) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(form.email))
-      newErrors.email = "Email is invalid";
-    if (!form.password) newErrors.password = "Password is required";
-    if (isSignup && form.password !== form.confirmPassword)
-      newErrors.confirmPassword = "Passwords do not match";
-    return newErrors;
-  };
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    setLoading(true);
-    const url = `${import.meta.env.VITE_API_URL}/${isSignup ? "register" : "login"}`;
-
-
-    try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.text();
-
-      if (res.ok) {
-        if (isSignup) {
-          // ✅ Registration succeeded – switch to login mode
-          setMessage("✅ Registered successfully! Please login.");
-          setIsSignup(false);
-          setForm({
-            name: "",
-            email: form.email, // optionally keep the email pre-filled
-            password: "",
-            confirmPassword: "",
-          });
-        
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: isRegister
+      ? { name: "", email: "", password: "" }
+      : { email: "", password: "" },
+    validationSchema: Yup.object(
+      isRegister
+        ? {
+            name: Yup.string().required("Name is required"),
+            email: Yup.string().email("Invalid email").required("Email required"),
+            password: Yup.string().min(6, "Minimum 6 characters").required("Password required"),
+          }
+        : {
+            email: Yup.string().email("Invalid email").required("Email required"),
+            password: Yup.string().min(6, "Minimum 6 characters").required("Password required"),
+          }
+    ),
+    onSubmit: async (values) => {
+      try {
+        if (isRegister) {
+          await register(values);
+          toast.success("Registered successfully! Please login.");
+          navigate("/login"); // Redirect to login after registration
         } else {
-          login();
-          setMessage("✅ Logged in successfully!");
-          setTimeout(() => {
-            navigate("/resutrack");
-          }, 500);
+          await login(values);
+          toast.success("Login successful!");
+          navigate("/"); // Redirect to home after login
         }
-      } else {
-        setMessage(data || "Something went wrong.");
+      } catch (err) {
+        toast.error(err.message || "Error occurred");
       }
-    } catch (err) {
-      setMessage("Error: " + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+  });
 
   return (
     <div className="auth-container">
-      <form className="auth-form" onSubmit={handleSubmit} autoComplete="off">
-        <h2 className="form-heading">{isSignup ? "Sign Up" : "Login"}</h2>
-
-        {isSignup && (
+      <div className="auth-form">
+        <h2>{isRegister ? "Register" : "Login"}</h2>
+        <form onSubmit={formik.handleSubmit}>
+          {isRegister && (
+            <div className="input-container">
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                className="input-field"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                autoComplete="name"
+              />
+              {formik.touched.name && formik.errors.name && (
+                <div className="error">{formik.errors.name}</div>
+              )}
+            </div>
+          )}
           <div className="input-container">
             <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={form.name}
-              onChange={handleChange}
+              type="email"
+              name="email"
+              placeholder="Email"
               className="input-field"
-              autoComplete="new-name"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              autoComplete="email"
             />
-            {errors.name && <span className="error">{errors.name}</span>}
-          </div>
-        )}
-
-        <div className="input-container">
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-            className="input-field"
-            autoComplete="new-email"
-          />
-          {errors.email && <span className="error">{errors.email}</span>}
-        </div>
-
-        <div className="input-container password-container">
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-            className="input-field"
-            autoComplete="new-password"
-          />
-          <span
-            className="toggle-password"
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
-            {showPassword ? "🔓" : "🔒"}
-          </span>
-          {errors.password && <span className="error">{errors.password}</span>}
-        </div>
-
-        {isSignup && (
-          <div className="input-container password-container">
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              className="input-field"
-              autoComplete="new-password"
-            />
-            <span
-              className="toggle-password"
-              onClick={() => setShowConfirmPassword((prev) => !prev)}
-            >
-              {showConfirmPassword ? "🔓" : "🔒"}
-            </span>
-            {errors.confirmPassword && (
-              <span className="error">{errors.confirmPassword}</span>
+            {formik.touched.email && formik.errors.email && (
+              <div className="error">{formik.errors.email}</div>
             )}
           </div>
-        )}
-
-        <button type="submit" className="submit-btn" disabled={loading}>
-          {loading
-            ? isSignup
-              ? "Registering..."
-              : "Logging in..."
-            : isSignup
-            ? "Register"
-            : "Login"}
-        </button>
-
-        {message && <p className="message">{message}</p>}
-
-        <p className="switch-link" onClick={toggleMode}>
-          {isSignup
-            ? "Already have an account? Login"
-            : "Don't have an account? Sign up"}
-        </p>
-      </form>
+          <div className="input-container" style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              className="input-field"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              autoComplete={isRegister ? "new-password" : "current-password"}
+            />
+            <button
+              type="button"
+              className="password-toggle-btn"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? "🔓" : "🔒"}
+            </button>
+            {formik.touched.password && formik.errors.password && (
+              <div className="error">{formik.errors.password}</div>
+            )}
+          </div>
+          <button type="submit" className="submit-btn">
+            {isRegister ? "Register" : "Login"}
+          </button>
+        </form>
+        <div className="toggle-link">
+          <p>
+            {isRegister ? "Already have an account?" : "Don’t have an account?"}{" "}
+            <button
+              type="button"
+              onClick={() => navigate(isRegister ? "/login" : "/register")}
+              className="link-button"
+            >
+              {isRegister ? "Login" : "Register"} here
+            </button>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
