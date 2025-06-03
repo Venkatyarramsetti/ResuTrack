@@ -254,25 +254,33 @@ body.nav-active .nav__list-item {
   font-weight: 600;
 }
 /* Navbar logout button style */
-.logout-button {
-  background: linear-gradient(135deg, #4a90e2, #357ABD);
-  color: white;
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 18px;
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-  font-size: 14px;
-  margin-left: 12px; /* space from other nav items */
+  font-size: 15px;
+  margin-left: 12px;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(101, 118, 255, 0.4);
 }
 
-.logout-button:hover {
-  background: linear-gradient(135deg, #357ABD, #2C5AA0);
-  box-shadow: 0 4px 12px rgba(53, 122, 189, 0.6);
+.logout-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(101, 118, 255, 0.6);
 }
 
-.logout-button:active {
-  background: #2C5AA0;
+.logout-btn:active {
+  transform: scale(0.98);
   box-shadow: none;
+}
+
+.logout-icon {
+  font-size: 16px;
 }

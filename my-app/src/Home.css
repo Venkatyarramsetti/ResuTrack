@@ -59,16 +59,17 @@ a {
   transform-style: preserve-3d;
   backface-visibility: hidden;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+   background: linear-gradient(135deg, #1e3c72, #2a5298);
 }
 
 .feature-item:nth-child(2) {
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  background: linear-gradient(135deg, #007cf0, #3f4242); /* Vivid cyan-blue blend */
 }
 
 .feature-item:nth-child(3) {
-  background: linear-gradient(135deg, #43cea2, #185a9d);
+  background: linear-gradient(135deg, #396afc, #2948ff); /* Smooth electric blue */
 }
+
 
 .feature-item.active {
   transform: rotateY(15deg) scale(1.1);

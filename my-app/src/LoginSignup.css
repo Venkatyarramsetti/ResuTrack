@@ -3,6 +3,27 @@ a {
   text-decoration: none;
   color: inherit;
 }
+p {
+  color: rgb(11, 223, 219);
+}
+.link-button {
+  background: radial-gradient(circle, #3a8dde 0%, #3563b8 100%);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.link-button:hover {
+  transform: scale(1.05);
+  background: radial-gradient(circle, #5aaeff 0%, #27408b 100%);
+}
+
 
 /* Main Container */
 .auth-container {
@@ -53,7 +74,7 @@ a {
   border: 1.5px solid #ccc;
   font-size: 16px;
   background: transparent;
-  color: #fff;
+  color: #d0f0ff;
   line-height: 1.2;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -114,8 +135,8 @@ a {
   border-radius: 10px;
   font-size: 16px;
   font-weight: bold;
-  color: white;
-  background: linear-gradient(135deg, #1b43e6, #4d65ec);
+  color: rgb(163, 23, 238);
+  background: linear-gradient(135deg, #9fdace, #424972);
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -148,18 +169,18 @@ a {
 .toggle-link {
   text-align: center;
   font-size: 14px;
-  color: #ffffff;
+  color:rgb(59, 127, 237);
   margin-top: 15px;
 }
 
 .toggle-link a {
-  color: #00ffe0;
+  color: #b715fd;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
 .toggle-link a:hover {
-  color: #ffffff;
+  color: #2214f1;
   text-decoration: underline;
 }
 

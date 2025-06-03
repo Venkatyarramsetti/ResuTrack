@@ -45,8 +45,9 @@ const Navbar = () => {
           <div className="logo-wrap">
             {isLoggedIn ? (
               <button onClick={handleLogout} className="hover-target logout-btn">
-                Logout
+                <span className="logout-icon">🔓</span> Logout
               </button>
+
             ) : (
               <Link to="/login" className="hover-target">
                 <span>Login/Signup</span>
