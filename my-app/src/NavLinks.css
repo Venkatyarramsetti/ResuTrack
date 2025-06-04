@@ -1,14 +1,19 @@
 .nav__list {
   list-style: none;
-  padding: 0;
+  padding: 10px;
   margin: 0;
 }
 
 .nav__list-item {
   margin: 10px 0;
-  opacity: 0;
-  transform: translateX(-20%);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 100;
+  transform: translateX(-30px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+body.nav-active .nav__list-item {
+  opacity: 100;
+  transform: translateX(0);
 }
 
 .nav__list-item a {
@@ -28,33 +33,64 @@
   left: 0;
   width: 5px;
   height: 0;
-  opacity: 0;
+  opacity: 100;
   background-color: #8167a9;
   transition: all 200ms linear;
 }
 
 .nav__list-item a:hover {
-  color: #fff;
+  color: #074b7b;
 }
 
 .nav__list-item a:hover:after {
   top: 0;
   height: 100%;
-  opacity: 1;
+  opacity: 100;
 }
 
 .nav__list-item.active-nav a {
-  color: #fff;
+  color: #2015e8;
 }
 
 .nav__list-item.active-nav a:after {
   height: 100%;
-  opacity: 1;
+  opacity: 100;
   top: 0;
 }
 
-/* Show animation when nav is active */
-body.nav-active .nav__list-item {
-  opacity: 1;
-  transform: translateX(0%);
+/* Logout button */
+.logout-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #4a90e2, #357ABD);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  animation: fadeIn 0.3s ease-in forwards;
+  opacity: 100;
+}
+
+.logout-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(58, 126, 255, 0.4);
+}
+
+.logout-btn:active {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 100;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 100;
+    transform: translateX(0);
+  }
 }

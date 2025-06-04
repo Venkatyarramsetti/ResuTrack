@@ -23,12 +23,12 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch("http://localhost:5000/send-query", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, query }),
-      });
+   try {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/send-query`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, query }),
+  });
 
       const data = await response.json();
 
