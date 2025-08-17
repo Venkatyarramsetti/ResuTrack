@@ -4,7 +4,6 @@ import "./ImageAnalyzer.css";
 
 const ImageAnalyzer = () => {
   const [image, setImage] = useState(null);
-  const [prompt, setPrompt] = useState("");
   const [company, setCompany] = useState("");
   const [response, setResponse] = useState("");
   const [preview, setPreview] = useState(null);
@@ -99,102 +98,120 @@ const ImageAnalyzer = () => {
 
   const cleanMarkdown = (text) => {
     return text
-      .replace(/[*_~>#-]/g, "") // Remove *, _, ~, , #, >, -
-      .replace(/\[(.*?)\]\(.*?\)/g, "$1") // Convert [text](link) to text
-      .replace(/\n{2,}/g, "\n") // Collapse multiple newlines
+      .replace(/^### (.*$)/gim, "<h4>$1</h4>")
+      .replace(/^## (.*$)/gim, "<h3>$1</h3>")
+      .replace(/^# (.*$)/gim, "<h2>$1</h2>")
+      .replace(/^- (.*$)/gim, "<li>$1</li>")
+      .replace(/^\* (.*$)/gim, "<li>$1</li>")
+      .replace(/(<li>.*<\/li>)/gims, "<ul>$1</ul>")
+      .replace(/^\d+\. (.*$)/gim, "<li>$1</li>")
+      .replace(/(<li>.*<\/li>)/gims, "<ol>$1</ol>")
+      .replace(/\*\*(.*?)\*\*/gim, "<b>$1</b>")
+      .replace(/\*(.*?)\*/gim, "<i>$1</i>")
       .trim();
   };
 
-  const { analysis, roadmap, companies } = splitSections(response);
+  const { analysis, roadmap, companies, improvements } = splitSections(response);
 
   return (
-    <div className="container">
-      <h2 className="title">ResuTrack Analyzer</h2>
+    <div>
+      {/* 🔹 Top Input Box */}
+      <div className="container">
+        <h2 className="title">ResuTrack Analyzer</h2>
 
-      <div className="input-group">
-        <label htmlFor="resume-upload" className="input-label">
-          Upload your resume:
-        </label>
-        <input
-          id="resume-upload"
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            setImage(e.target.files[0]);
-            setResponse(""); // Clear previous response when new file is chosen
-            setPreview(null); // Clear preview if needed, optional
-          }}
-          className="file-input"
-        />
-      </div>
-
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleAnalyze();
-        }}
-      >
         <div className="input-group">
-          <label htmlFor="company-input" className="input-label">
-            Dream Company:
+          <label htmlFor="resume-upload" className="input-label">
+            Upload your resume:
           </label>
           <input
-            id="company-input"
-            type="text"
-            onChange={(e) => setCompany(e.target.value)}
-            placeholder="e.g., Google, Microsoft, Apple..."
-            className="company-input"
+            id="resume-upload"
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              setImage(e.target.files[0]);
+              setResponse("");
+              setPreview(null);
+            }}
+            className="file-input"
           />
         </div>
 
-        <button type="submit" className="analyze-button">
-          Assess Now
-        </button>
-      </form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleAnalyze();
+          }}
+        >
+          <div className="input-group">
+            <label htmlFor="company-input" className="input-label">
+              Dream Company:
+            </label>
+            <input
+              id="company-input"
+              type="text"
+              onChange={(e) => setCompany(e.target.value)}
+              placeholder="e.g., Google, Microsoft, Apple..."
+              className="company-input"
+            />
+          </div>
 
-      {preview && <img src={preview} alt="Preview" className="preview" />}
+          <button type="submit" className="analyze-button">
+            Assess Now
+          </button>
+        </form>
 
-      {loading ? (
-        <div className="spinner-container">
-          <div className="spinner"></div>
-          <p>Analyzing resume, please wait...</p>
-        </div>
-      ) : (
-        <>
-          <div className="venkat">
+        {preview && <img src={preview} alt="Preview" className="preview" />}
+
+      <div className="response-container">
+        {loading ? (
+          <div className="spinner-container">
+            <div className="spinner"></div>
+            <p>Analyzing resume, please wait...</p>
+          </div>
+        ) : (
+          <>
             <section>
               <h3>📊 Analysis Based on Resume</h3>
-              <div className="response-box">{cleanMarkdown(analysis)}</div>
+              <div
+                className="response-box"
+                dangerouslySetInnerHTML={{ __html: cleanMarkdown(analysis) }}
+              />
             </section>
 
             <section>
               <h3>🏁 Personalized Roadmap to Get Into {company || "Your Dream Company"}</h3>
-              <div className="response-box">{cleanMarkdown(roadmap)}</div>
+              <div
+                className="response-box"
+                dangerouslySetInnerHTML={{ __html: cleanMarkdown(roadmap) }}
+              />
             </section>
 
             <section>
               <h3>🏢 Eligible Companies and Roles</h3>
-              <div className="response-box">{cleanMarkdown(companies)}</div>
+              <div
+                className="response-box"
+                dangerouslySetInnerHTML={{ __html: cleanMarkdown(companies) }}
+              />
             </section>
+
+            <section>
+              <h3>🔍 Areas for Improvement</h3>
+              <div
+                className="response-box"
+                dangerouslySetInnerHTML={{ __html: cleanMarkdown(improvements) }}
+              />
+            </section>
+
             <details>
-              <summary style={{ color: "#a9b8ff", cursor: "pointer" }}>Show Raw</summary>
-              <pre
-                style={{
-                  whiteSpace: "pre-wrap",
-                  color: "#d3d8ff",
-                  background: "#2a3a8c",
-                  padding: "1rem",
-                  borderRadius: "12px",
-                  marginTop: "8px",
-                }}
-              >
-                {cleanMarkdown(response)}
-              </pre>
+              <summary>Show Raw</summary>
+              <pre>{response}</pre>
             </details>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
     </div>
+      </div>
+      
   );
 };
 
