@@ -48,7 +48,7 @@ const ImageAnalyzer = () => {
     );
 
     try {
-      const res = await fetch("http://localhost:5000/image-analyze", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/image-analyze`, {
         method: "POST",
         body: formData,
       });
