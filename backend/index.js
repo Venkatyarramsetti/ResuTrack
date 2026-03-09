@@ -12,7 +12,7 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import nodemailer from "nodemailer";
 import { fileURLToPath } from "url";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,7 +39,7 @@ app.use(express.json());
 
 const upload = multer({ dest: "uploads/" });
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 app.get("/", (req, res) => {
   res.send("👋 Hello from MongoDB-backed backend!");
@@ -53,21 +53,25 @@ app.post("/image-analyze", upload.single("image"), async (req, res) => {
     const imageBuffer = fs.readFileSync(imagePath);
     const imageBase64 = imageBuffer.toString("base64");
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
-
-    const result = await model.generateContent([
-      {
-        inlineData: {
-          mimeType: req.file.mimetype,
-          data: imageBase64,
+    const result = await groq.chat.completions.create({
+      model: "meta-llama/llama-4-scout-17b-16e-instruct",
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "image_url",
+              image_url: { url: `data:${req.file.mimetype};base64,${imageBase64}` },
+            },
+            { type: "text", text: prompt },
+          ],
         },
-      },
-      { text: prompt },
-    ]);
+      ],
+    });
 
     fs.unlinkSync(imagePath);
-    const response = await result.response;
-    res.json({ analysis: response.text() });
+    const analysis = result.choices[0]?.message?.content || "No analysis returned";
+    res.json({ analysis });
   } catch (error) {
     console.error("Image analysis error:", error);
     res.status(500).json({ error: "Failed to analyze image" });
