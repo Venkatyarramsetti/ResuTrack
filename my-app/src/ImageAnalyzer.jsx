@@ -214,5 +214,4 @@ const ImageAnalyzer = () => {
       
   );
 };
-
 export default ImageAnalyzer;
