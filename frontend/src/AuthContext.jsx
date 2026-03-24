@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getApiUrl } from "./config/api";
+import axiosInstance from "./config/axios";
 
 const AuthContext = createContext();
 
@@ -13,22 +13,10 @@ export const AuthProvider = ({ children }) => {
   });
 
   const register = async ({ name, email, password }) => {
-    const res = await fetch(getApiUrl("/register"), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
-    });
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Register error response:", errorText);
-      let errorMsg = "Registration failed";
-      try {
-        const errorJson = JSON.parse(errorText);
-        errorMsg = errorJson.error || errorMsg;
-      } catch {
-        errorMsg = "Registration failed";
-      }
+    try {
+      await axiosInstance.post("/register", { name, email, password });
+    } catch (error) {
+      const errorMsg = error.response?.data?.error || "Registration failed";
       throw new Error(errorMsg);
     }
 
@@ -38,26 +26,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async ({ email, password }) => {
-    const res = await fetch(getApiUrl("/login"), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Login error response:", errorText);
-      let errorMsg = "Login failed";
-      try {
-        const errorJson = JSON.parse(errorText);
-        errorMsg = errorJson.error || errorMsg;
-      } catch {
-        errorMsg = "Login failed";
-      }
+    let data;
+    try {
+      const res = await axiosInstance.post("/login", { email, password });
+      data = res.data;
+    } catch (error) {
+      const errorMsg = error.response?.data?.error || "Login failed";
       throw new Error(errorMsg);
     }
 
-    const data = await res.json();
     setUser(data.user);
     localStorage.setItem("authUser", JSON.stringify(data.user));
     return data;

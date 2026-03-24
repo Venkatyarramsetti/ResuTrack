@@ -3,7 +3,7 @@ import { env } from "../config/env.js";
 
 const groq = new Groq({ apiKey: env.groqApiKey });
 
-export async function analyzeImageWithPrompt({ mimeType, imageBase64, prompt }) {
+export async function analyzeImageWithPrompt({ imageUrl, prompt }) {
   const result = await groq.chat.completions.create({
     model: "meta-llama/llama-4-scout-17b-16e-instruct",
     messages: [
@@ -12,7 +12,7 @@ export async function analyzeImageWithPrompt({ mimeType, imageBase64, prompt }) 
         content: [
           {
             type: "image_url",
-            image_url: { url: `data:${mimeType};base64,${imageBase64}` },
+            image_url: { url: imageUrl },
           },
           { type: "text", text: prompt },
         ],

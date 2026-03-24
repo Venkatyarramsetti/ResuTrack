@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./index.css";
 import "./ImageAnalyzer.css";
-import { getApiUrl } from "./config/api";
+import axiosInstance from "./config/axios";
 
 const ImageAnalyzer = () => {
   const [image, setImage] = useState(null);
@@ -49,12 +49,8 @@ const ImageAnalyzer = () => {
     );
 
     try {
-      const res = await fetch(getApiUrl("/image-analyze"), {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
+      const res = await axiosInstance.post("/image-analyze", formData);
+      const data = res.data;
       setResponse(data.analysis || "No response from Gemini.");
     } catch (err) {
       console.error("Error:", err);

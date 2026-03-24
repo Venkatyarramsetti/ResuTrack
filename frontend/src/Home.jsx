@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import './Home.css';
-import { getApiUrl } from "./config/api";
+import axiosInstance from "./config/axios";
 
 const Home = () => {
   const [activeBox, setActiveBox] = useState(null);
@@ -25,23 +25,13 @@ const Home = () => {
     e.preventDefault();
 
    try {
-  const response = await fetch(getApiUrl("/send-query"), {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, query }),
-  });
-
-      const data = await response.json();
-
-      if (response.ok) {
+      await axiosInstance.post("/send-query", { email, query });
         setStatus("Query sent!");
         setEmail("");
         setQuery("");
-      } else {
-        setStatus(`Error: ${data.error || "Failed to send query"}`);
-      }
-    } catch {
-      setStatus("Network error: Failed to send query");
+    } catch (error) {
+      const message = error.response?.data?.error || "Failed to send query";
+      setStatus(`Error: ${message}`);
     }
 
     setTimeout(() => setStatus(null), 3000);
